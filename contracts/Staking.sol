@@ -55,7 +55,6 @@ contract Staking is Ownable, IERC721Receiver {
     ownerOfToken(tokenId) isNotStakedYet(tokenId) stakingActive
     {
         totalStaked++;
-        nft.safeTransferFrom(msg.sender, address(this), tokenId, "0x00");
         if(Vault[tokenId].owner == address(0))
         {
             Vault[tokenId] = Stake({
@@ -77,6 +76,7 @@ contract Staking is Ownable, IERC721Receiver {
             Vault[tokenId].active = true;
             Vault[tokenId].timestamp = block.timestamp;
         }
+        nft.safeTransferFrom(msg.sender, address(this), tokenId, "0x00");
         emit Staked(msg.sender, uint16(tokenId));
     }
 
